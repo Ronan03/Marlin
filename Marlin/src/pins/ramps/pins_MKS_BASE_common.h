@@ -29,7 +29,7 @@
   #define BOARD_INFO_NAME "MKS BASE"
 #endif
 
-#if MKS_BASE_VERSION >= 14
+#if MKS_BASE_VERSION == 14 || MKS_BASE_VERSION == 15
   //
   // Heaters / Fans
   //

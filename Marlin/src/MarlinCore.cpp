@@ -567,7 +567,7 @@ inline void manage_inactivity(const bool ignore_stepper_queue=false) {
   #endif
 
   #if ENABLED(USE_CONTROLLER_FAN)
-    controllerFan.update(); // Check if fan should be turned on to cool stepper drivers down
+    controllerfan_update(); // Check if fan should be turned on to cool stepper drivers down
   #endif
 
   #if ENABLED(AUTO_POWER_CONTROL)
@@ -984,10 +984,6 @@ void setup() {
     SETUP_RUN(leds.setup());
   #endif
 
-  #if ENABLED(USE_CONTROLLER_FAN)     // Set up fan controller to initialize also the default configurations.
-    SETUP_RUN(controllerFan.setup());
-  #endif
-
   SETUP_RUN(ui.init());
   SETUP_RUN(ui.reset_status());       // Load welcome message early. (Retained if no errors exist.)
 
@@ -1049,6 +1045,10 @@ void setup() {
 
   #if HAS_BED_PROBE
     SETUP_RUN(endstops.enable_z_probe(false));
+  #endif
+
+  #if ENABLED(USE_CONTROLLER_FAN)
+    SET_OUTPUT(CONTROLLER_FAN_PIN);
   #endif
 
   #if HAS_STEPPER_RESET

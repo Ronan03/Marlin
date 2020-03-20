@@ -118,7 +118,7 @@
   #endif
 #endif
 
-#if HAS_TMC_UART
+#if HAS_TMC220x
   /**
    * TMC2208/TMC2209 stepper drivers
    *

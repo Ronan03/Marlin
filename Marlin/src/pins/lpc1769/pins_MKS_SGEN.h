@@ -31,14 +31,8 @@
 
 #define BOARD_INFO_NAME   "MKS SGen"
 #define BOARD_WEBSITE_URL "github.com/makerbase-mks/MKS-SGEN"
-
-//
-// EEPROM
-//
-#define FLASH_EEPROM_EMULATION
-//#define SDCARD_EEPROM_EMULATION
-
 #define MKS_HAS_LPC1769
+
 #include "../lpc1768/pins_MKS_SBASE.h"
 
 #undef E1_STEP_PIN
@@ -50,7 +44,7 @@
 //#define BTN_EN1            P1_23   // EXP2.5
 //#define BTN_EN2            P1_22   // EXP2.3
 
-#if HAS_TMC_UART
+#if HAS_TMC220x
   /**
    * TMC2208/TMC2209 stepper drivers
    *

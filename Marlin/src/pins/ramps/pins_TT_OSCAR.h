@@ -99,7 +99,7 @@
 #define E4_ENABLE_PIN      47
 #define E4_CS_PIN          E0_CS_PIN
 
-#if HAS_TMC_UART
+#if HAS_TMC220x
   /**
    * TMC2208/TMC2209 stepper drivers
    *

@@ -67,7 +67,6 @@ inline void toggle_pins() {
     else {
       watchdog_refresh();
       report_pin_state_extended(pin, ignore_protection, true, PSTR("Pulsing   "));
-      const bool prior_mode = GET_PINMODE(pin);
       #if AVR_AT90USB1286_FAMILY // Teensy IDEs don't know about these pins so must use FASTIO
         if (pin == TEENSY_E2) {
           SET_OUTPUT(TEENSY_E2);
@@ -96,7 +95,6 @@ inline void toggle_pins() {
           watchdog_refresh();
         }
       }
-      pinMode(pin, prior_mode);
     }
     SERIAL_EOL();
   }

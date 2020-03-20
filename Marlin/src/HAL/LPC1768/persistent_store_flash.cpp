@@ -36,11 +36,12 @@
  * 16Kb I/O buffers (intended to hold DMA USB and Ethernet data, but currently
  * unused).
  */
-#include "../../inc/MarlinConfig.h"
+#include "../../inc/MarlinConfigPre.h"
 
 #if ENABLED(FLASH_EEPROM_EMULATION)
 
 #include "persistent_store_api.h"
+#include "../../inc/MarlinConfig.h"
 
 extern "C" {
   #include <lpc17xx_iap.h>
