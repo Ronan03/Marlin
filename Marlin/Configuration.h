@@ -486,9 +486,9 @@
   // If you are using a pre-configured hotend then you can use one of the value sets by uncommenting it
 
   // E3D_TITAN_Ronan
-  #define DEFAULT_Kp 33.52
-  #define DEFAULT_Ki 3.61
-  #define DEFAULT_Kd 77.72
+  #define DEFAULT_Kp 38.57
+  #define DEFAULT_Ki 3.86
+  #define DEFAULT_Kd 96.43
 
   // MakerGear
   //#define DEFAULT_Kp 7.0
@@ -519,7 +519,7 @@
  * heater. If your configuration is significantly different than this and you don't understand
  * the issues involved, don't use bed PID until someone else verifies that your hardware works.
  */
-//#define PIDTEMPBED
+#define PIDTEMPBED
 
 //#define BED_LIMIT_SWITCHING
 
