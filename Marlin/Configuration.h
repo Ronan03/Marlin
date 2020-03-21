@@ -486,9 +486,9 @@
   // If you are using a pre-configured hotend then you can use one of the value sets by uncommenting it
 
   // E3D_TITAN_Ronan
-  #define DEFAULT_Kp 38.57
-  #define DEFAULT_Ki 3.86
-  #define DEFAULT_Kd 96.43
+  #define DEFAULT_Kp 29.11
+  #define DEFAULT_Ki 4.85
+  #define DEFAULT_Kd 116.44
 
   // MakerGear
   //#define DEFAULT_Kp 7.0
