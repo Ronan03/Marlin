@@ -486,9 +486,9 @@
   // If you are using a pre-configured hotend then you can use one of the value sets by uncommenting it
 
   // E3D_TITAN_Ronan
-  #define DEFAULT_Kp 34.08
-  #define DEFAULT_Ki 3.11
-  #define DEFAULT_Kd 93.39
+  #define DEFAULT_Kp 71.79
+  #define DEFAULT_Ki 10.43
+  #define DEFAULT_Kd 123.48
 
   // MakerGear
   //#define DEFAULT_Kp 7.0
@@ -537,9 +537,9 @@
 
   //120V 250W silicone heater into 4mm borosilicate (MendelMax 1.5+)
   //Bed Ronan Silicone 220V 200W
-  #define DEFAULT_bedKp 29.11
-  #define DEFAULT_bedKi 4.85
-  #define DEFAULT_bedKd 116.44
+  #define DEFAULT_bedKp 35.18
+  #define DEFAULT_bedKi 6.28
+  #define DEFAULT_bedKd 131.32
 
   //120V 250W silicone heater into 4mm borosilicate (MendelMax 1.5+)
   //from pidautotune
