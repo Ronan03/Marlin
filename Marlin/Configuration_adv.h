@@ -137,7 +137,7 @@
  * and fire. Marlin always includes safe min and max temperature ranges which
  * protect against a broken or disconnected thermistor wire.
  *
- * The issue: If a thermistor falls out, it will report the much lower
+ * The issue: If a thermistor falls out, it will report the much loweré
  * temperature of the air in the room, and the the firmware will keep
  * the heater on.
  *
