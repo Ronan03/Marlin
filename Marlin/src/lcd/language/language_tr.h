@@ -606,3 +606,4 @@ namespace Language_tr {
   #define MSG_FIRST_FAN_SPEED       MSG_FAN_SPEED_N
   #define MSG_FIRST_EXTRA_FAN_SPEED MSG_EXTRA_FAN_SPEED_N
 #endif
+ 

@@ -105,7 +105,6 @@ SCREEN_TABLE {
   DECL_SCREEN(BioConfirmHomeE),
 #endif
 #if ENABLED(TOUCH_UI_COCOA_PRESS)
-  DECL_SCREEN(PreheatMenu),
   DECL_SCREEN(PreheatTimerScreen),
 #endif
 #if ENABLED(TOUCH_UI_DEVELOPER_MENU)

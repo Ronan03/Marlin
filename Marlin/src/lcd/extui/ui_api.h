@@ -341,10 +341,10 @@ namespace ExtUI {
   void onConfigurationStoreWritten(bool success);
   void onConfigurationStoreRead(bool success);
   #if ENABLED(POWER_LOSS_RECOVERY)
-    void onPowerLossResume();
+    void OnPowerLossResume();
   #endif
   #if HAS_PID_HEATING
-    void onPidTuning(const result_t rst);
+    void OnPidTuning(const result_t rst);
   #endif
 };
 

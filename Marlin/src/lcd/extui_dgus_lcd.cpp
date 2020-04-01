@@ -123,7 +123,7 @@ namespace ExtUI {
   }
 
   #if ENABLED(POWER_LOSS_RECOVERY)
-    void onPowerLossResume() {
+    void OnPowerLossResume() {
       // Called on resume from power-loss
       ScreenHandler.GotoScreen(DGUSLCD_SCREEN_POWER_LOSS);
     }
@@ -131,9 +131,9 @@ namespace ExtUI {
 
 
   #if HAS_PID_HEATING
-    void onPidTuning(const result_t rst) {
+    void OnPidTuning(const result_t rst) {
       // Called for temperature PID tuning result
-      SERIAL_ECHOLNPAIR("onPidTuning:",rst);
+      SERIAL_ECHOLNPAIR("OnPidTuning:",rst);
       switch(rst) {
         case PID_BAD_EXTRUDER_NUM:
           ScreenHandler.setstatusmessagePGM(PSTR(STR_PID_BAD_EXTRUDER_NUM));
