@@ -149,8 +149,17 @@
 
   #define CLCD_SPI_CS                    BTN_EN1
   #define CLCD_MOD_RESET                 BTN_EN2
-  
+
   #if MB(EINSY_RAMBO, EINSY_RETRO) && DISABLED(SDSUPPORT)
     #define CLCD_SPI_EXTRA_CS            SDSS
   #endif
+#endif
+
+#if EITHER(E3_EXP1_PINMAP, GENERIC_EXP2_PINMAP)
+  #ifndef __MARLIN_FIRMWARE__
+    #error "This pin mapping requires Marlin."
+  #endif
+
+  #define CLCD_MOD_RESET                 BTN_EN1
+  #define CLCD_SPI_CS                    LCD_PINS_RS
 #endif
