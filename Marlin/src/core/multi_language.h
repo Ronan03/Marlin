@@ -22,7 +22,7 @@
 
 typedef const char Language_Str[];
 
-#ifdef LCD_LANGUAGE_5
+#if defined(LCD_LANGUAGE_5)
   #define NUM_LANGUAGES 5
 #elif defined(LCD_LANGUAGE_4)
   #define NUM_LANGUAGES 4

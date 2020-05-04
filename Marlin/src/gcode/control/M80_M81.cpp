@@ -92,7 +92,7 @@ void GcodeSuite::M81() {
   print_job_timer.stop();
   planner.finish_and_disable();
 
-  #if HAS_FAN
+  #if FAN_COUNT > 0
     thermalManager.zero_fan_speeds();
     #if ENABLED(PROBING_FANS_OFF)
       thermalManager.fans_paused = false;

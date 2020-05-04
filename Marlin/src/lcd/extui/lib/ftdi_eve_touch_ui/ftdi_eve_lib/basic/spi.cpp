@@ -29,7 +29,7 @@
 namespace FTDI {
 
   #ifndef CLCD_USE_SOFT_SPI
-    #ifdef CLCD_SPI_BUS
+    #ifndef __AVR__
       SPIClass EVE_SPI(CLCD_SPI_BUS);
     #endif
     SPISettings SPI::spi_settings(SPI_FREQUENCY, MSBFIRST, SPI_MODE0);

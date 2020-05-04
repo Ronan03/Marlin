@@ -147,10 +147,8 @@
 // Persistent Storage
 // If no option is selected below the SD Card will be used
 //
-#if NO_EEPROM_SELECTED
-  //#define SPI_EEPROM
-  #define FLASH_EEPROM_EMULATION
-#endif
+//#define SPI_EEPROM
+#define FLASH_EEPROM_EMULATION
 
 #undef E2END
 #if ENABLED(SPI_EEPROM)

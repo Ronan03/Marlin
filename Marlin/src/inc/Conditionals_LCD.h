@@ -408,8 +408,6 @@
  */
 
 #if EXTRUDERS == 0
-  #undef EXTRUDERS
-  #define EXTRUDERS 0
   #undef DISTINCT_E_FACTORS
   #undef SINGLENOZZLE
   #undef SWITCHING_EXTRUDER
@@ -472,9 +470,6 @@
 
 #if HOTENDS
   #define HAS_HOTEND 1
-  #ifndef HOTEND_OVERSHOOT
-    #define HOTEND_OVERSHOOT 15
-  #endif
   #if HOTENDS > 1
     #define HAS_MULTI_HOTEND 1
     #define HAS_HOTEND_OFFSET 1

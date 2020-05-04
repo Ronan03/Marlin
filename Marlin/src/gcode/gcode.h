@@ -554,7 +554,7 @@ private:
 
   static void M105();
 
-  #if HAS_FAN
+  #if FAN_COUNT > 0
     static void M106();
     static void M107();
   #endif
@@ -602,7 +602,7 @@ private:
     static void M191();
   #endif
 
-  #if HAS_HOTEND && HAS_LCD_MENU
+  #if HOTENDS && HAS_LCD_MENU
     static void M145();
   #endif
 

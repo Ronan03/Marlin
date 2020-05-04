@@ -51,17 +51,12 @@ namespace ExtUI {
   }
 
   void onMediaRemoved() {
-    if (isPrintingFromMedia()) {
-      stopPrint();
-      InterfaceSoundsScreen::playEventSound(InterfaceSoundsScreen::PRINTING_FAILED);
-    }
-    else
-      sound.play(media_removed, PLAY_ASYNCHRONOUS);
-
-    if (AT_SCREEN(StatusScreen) || isPrintingFromMedia())
+    if (AT_SCREEN(StatusScreen))
       StatusScreen::setStatusMessage(GET_TEXT_F(MSG_MEDIA_REMOVED));
-
-    if (AT_SCREEN(FilesScreen)) GOTO_SCREEN(StatusScreen)
+    sound.play(media_removed, PLAY_ASYNCHRONOUS);
+    if (AT_SCREEN(FilesScreen)) {
+      GOTO_SCREEN(StatusScreen)
+    }
   }
 
   void onMediaError() {

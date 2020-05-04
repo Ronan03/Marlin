@@ -277,7 +277,7 @@ void DGUSScreenVariableHandler::DGUSLCD_SendStringToDisplayPGM(DGUS_VP_Variable 
 #endif
 
 // Send fan status value to the display.
-#if HAS_FAN
+#if FAN_COUNT > 0
   void DGUSScreenVariableHandler::DGUSLCD_SendFanStatusToDisplay(DGUS_VP_Variable &var) {
     if (var.memadr) {
       DEBUG_ECHOPAIR(" DGUSLCD_SendFanStatusToDisplay ", var.VP);
@@ -872,7 +872,7 @@ void DGUSScreenVariableHandler::HandleProbeOffsetZChanged(DGUS_VP_Variable &var,
   }
 #endif
 
-#if HAS_FAN
+#if FAN_COUNT
   void DGUSScreenVariableHandler::HandleFanControl(DGUS_VP_Variable &var, void *val_ptr) {
     DEBUG_ECHOLNPGM("HandleFanControl");
     *(uint8_t*)var.memadr = *(uint8_t*)var.memadr > 0 ? 0 : 255;
