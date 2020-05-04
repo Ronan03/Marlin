@@ -54,7 +54,8 @@ void _mmu2_load_filament(uint8_t index) {
   ui.reset_status();
 }
 void action_mmu2_load_all() {
-  LOOP_L_N(i, EXTRUDERS) _mmu2_load_filament(i);
+  LOOP_L_N(i, EXTRUDERS)
+    _mmu2_load_filament(i);
   ui.return_to_status();
 }
 

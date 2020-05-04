@@ -24,21 +24,15 @@
 
 #include "../../inc/MarlinConfig.h"
 
-#if USE_WIRED_EEPROM
+#if EITHER(USE_WIRED_EEPROM, SRAM_EEPROM_EMULATION)
 
-/**
- * PersistentStore for Arduino-style EEPROM interface
- * with simple implementations supplied by Marlin.
- */
-
-#include "../shared/eeprom_if.h"
 #include "../shared/eeprom_api.h"
 
-size_t PersistentStore::capacity()    { return E2END + 1; }
-bool PersistentStore::access_finish() { return true; }
+bool PersistentStore::access_start() {
+  return true;
+}
 
-bool PersistentStore::access_start()  {
-  eeprom_init();
+bool PersistentStore::access_finish() {
   return true;
 }
 
@@ -46,16 +40,21 @@ bool PersistentStore::write_data(int &pos, const uint8_t *value, size_t size, ui
   while (size--) {
     uint8_t v = *value;
 
-    // EEPROM has only ~100,000 write cycles,
-    // so only write bytes that have changed!
-    uint8_t * const p = (uint8_t * const)pos;
-    if (v != eeprom_read_byte(p)) {
-      eeprom_write_byte(p, v);
-      if (eeprom_read_byte(p) != v) {
-        SERIAL_ECHO_MSG(STR_ERR_EEPROM_WRITE);
-        return true;
+    // Save to either external EEPROM, program flash or Backup SRAM
+    #if USE_WIRED_EEPROM
+      // EEPROM has only ~100,000 write cycles,
+      // so only write bytes that have changed!
+      uint8_t * const p = (uint8_t * const)pos;
+      if (v != eeprom_read_byte(p)) {
+        eeprom_write_byte(p, v);
+        if (eeprom_read_byte(p) != v) {
+          SERIAL_ECHO_MSG(STR_ERR_EEPROM_WRITE);
+          return true;
+        }
       }
-    }
+    #else
+      *(__IO uint8_t *)(BKPSRAM_BASE + (uint8_t * const)pos) = v;
+    #endif
 
     crc16(crc, &v, 1);
     pos++;
@@ -68,7 +67,14 @@ bool PersistentStore::write_data(int &pos, const uint8_t *value, size_t size, ui
 bool PersistentStore::read_data(int &pos, uint8_t* value, size_t size, uint16_t *crc, const bool writing/*=true*/) {
   do {
     // Read from either external EEPROM, program flash or Backup SRAM
-    const uint8_t c = eeprom_read_byte((uint8_t*)pos);
+    const uint8_t c = (
+      #if USE_WIRED_EEPROM
+        eeprom_read_byte((uint8_t*)pos)
+      #else
+        (*(__IO uint8_t *)(BKPSRAM_BASE + ((uint8_t*)pos)))
+      #endif
+    );
+
     if (writing) *value = c;
     crc16(crc, &c, 1);
     pos++;
@@ -77,5 +83,15 @@ bool PersistentStore::read_data(int &pos, uint8_t* value, size_t size, uint16_t 
   return false;
 }
 
-#endif // USE_WIRED_EEPROM
+size_t PersistentStore::capacity() {
+  return (
+    #if USE_WIRED_EEPROM
+      E2END + 1
+    #else
+      4096 // 4kB
+    #endif
+  );
+}
+
+#endif // USE_WIRED_EEPROM || SRAM_EEPROM_EMULATION
 #endif // ARDUINO_ARCH_STM32 && !STM32GENERIC

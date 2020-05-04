@@ -34,19 +34,18 @@
 
   void menu_spindle_laser() {
 
-    const bool can_disable = cutter.enabled() && cutter.isOn;
-
     START_MENU();
     BACK_ITEM(MSG_MAIN);
-
     #if ENABLED(SPINDLE_LASER_PWM)
-      EDIT_ITEM_FAST( CUTTER_MENU_POWER_TYPE, MSG_CUTTER(POWER), &cutter.setPower
-                    , cutter.interpret_power(SPEED_POWER_MIN), cutter.interpret_power(SPEED_POWER_MAX)
-                    , []{ if (cutter.isOn) cutter.power = cutter.setPower; }
-      );
+      EDIT_ITEM_FAST(CUTTER_MENU_POWER_TYPE, MSG_CUTTER(POWER), &cutter.setPower, cutter.interpret_power(SPEED_POWER_MIN), cutter.interpret_power(SPEED_POWER_MAX),
+      []{
+        if (cutter.isOn) {
+          cutter.power = cutter.setPower;
+        }
+      });
     #endif
 
-    if (can_disable)
+    if (cutter.enabled() && cutter.isOn)
       ACTION_ITEM(MSG_CUTTER(OFF), cutter.disable);
     else {
       ACTION_ITEM(MSG_CUTTER(ON), cutter.enable_forward);

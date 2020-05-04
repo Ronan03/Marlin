@@ -108,12 +108,11 @@
 
 #endif
 
-#if ENABLED(SINGLENOZZLE_STANDBY_TEMP)
+#if ENABLED(SINGLENOZZLE)
   extern uint16_t singlenozzle_temp[EXTRUDERS];
-#endif
-
-#if BOTH(HAS_FAN, SINGLENOZZLE_STANDBY_FAN)
-  extern uint8_t singlenozzle_fan_speed[EXTRUDERS];
+  #if FAN_COUNT > 0
+    extern uint8_t singlenozzle_fan_speed[EXTRUDERS];
+  #endif
 #endif
 
 TERN_(ELECTROMAGNETIC_SWITCHING_TOOLHEAD, void est_init());

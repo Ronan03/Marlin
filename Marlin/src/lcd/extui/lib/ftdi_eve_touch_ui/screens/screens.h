@@ -223,6 +223,7 @@ class ConfirmStartPrintDialogBox : public DialogBoxBaseClass, public UncachedScr
 
     static const char *getFilename(bool longName);
   public:
+    static void onEntry();
     static void onRedraw(draw_mode_t);
     static bool onTouchEnd(uint8_t);
 

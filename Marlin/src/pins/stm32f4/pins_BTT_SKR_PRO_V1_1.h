@@ -30,10 +30,8 @@
 #define BOARD_INFO_NAME "BIGTREE SKR Pro 1.1" // redefined?
 
 // Use one of these or SDCard-based Emulation will be used
-#if NO_EEPROM_SELECTED
-  //#define SRAM_EEPROM_EMULATION                 // Use BackSRAM-based EEPROM emulation
-  #define FLASH_EEPROM_EMULATION                  // Use Flash-based EEPROM emulation
-#endif
+//#define SRAM_EEPROM_EMULATION                   // Use BackSRAM-based EEPROM emulation
+#define FLASH_EEPROM_EMULATION                    // Use Flash-based EEPROM emulation
 
 //
 // Servos
@@ -53,7 +51,7 @@
 //
 // Limit Switches
 //
-#ifdef X_STALL_SENSITIVITY
+#if X_STALL_SENSITIVITY
   #define X_STOP_PIN                  X_DIAG_PIN
   #if X_HOME_DIR < 0
     #define X_MAX_PIN                       PE15  // E0
@@ -65,7 +63,7 @@
   #define X_MAX_PIN                         PE15  // E0
 #endif
 
-#ifdef Y_STALL_SENSITIVITY
+#if Y_STALL_SENSITIVITY
   #define Y_STOP_PIN                  Y_DIAG_PIN
   #if Y_HOME_DIR < 0
     #define Y_MAX_PIN                       PE10  // E1
@@ -77,7 +75,7 @@
   #define Y_MAX_PIN                         PE10  // E1
 #endif
 
-#ifdef Z_STALL_SENSITIVITY
+#if Z_STALL_SENSITIVITY
   #define Z_STOP_PIN                  Z_DIAG_PIN
   #if Z_HOME_DIR < 0
     #define Z_MAX_PIN                       PG5   // E2

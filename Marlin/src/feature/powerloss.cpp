@@ -195,7 +195,7 @@ void PrintJobRecovery::save(const bool force/*=false*/) {
 
     TERN_(HAS_HEATED_BED, info.target_temperature_bed = thermalManager.temp_bed.target);
 
-    #if HAS_FAN
+    #if FAN_COUNT
       COPY(info.fan_speed, thermalManager.fan_speed);
     #endif
 
@@ -508,7 +508,7 @@ void PrintJobRecovery::resume() {
           DEBUG_ECHOLNPAIR("target_temperature_bed: ", info.target_temperature_bed);
         #endif
 
-        #if HAS_FAN
+        #if FAN_COUNT
           DEBUG_ECHOPGM("fan_speed: ");
           FANS_LOOP(i) {
             DEBUG_ECHO(int(info.fan_speed[i]));
