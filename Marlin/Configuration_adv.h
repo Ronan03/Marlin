@@ -3242,6 +3242,19 @@
   // Use hardware reset for MMU if a pin is defined for it
   #define MMU2_RST_PIN PC9
 
+  /**
+   * MMU Extruder Sensor
+   * Add support for Prusa IR Sensor (or other) to detect that filament reach the extruder to make loading filament more reliable
+   * If you have a sensor and he doesn't detect filament, he will try to push more the filament with MMU C0 command to reach it
+   * If finally filament is detected, so it will make a last C0 command to load filament into the gears
+   * If no filament is detected next the "loading attemps number", the printer will enter in runout state
+   */
+  #define MMU_EXTRUDER_SENSOR
+  #if ENABLED(MMU_EXTRUDER_SENSOR) 
+    #define MMU_LOADING_ATTEMPTS_NR 4 //max. number of attempts to load filament if first load failed
+  #endif
+
+
   // Enable if the MMU2 has 12V stepper motors (MMU2 Firmware 1.0.2 and up)
   #define MMU2_MODE_12V
 
@@ -3270,7 +3283,7 @@
       { -10.0,  600 }, \
       {  -5.0,  360 }, \
       {  25.0, 1325 }, \
-      { -25.0, 1104 }
+      { -25.0, 1104 }, \
       {  25.0,  883 }, \
       { -25.0,  662 }, \
       { -20.0, 2000 }, \
@@ -3303,7 +3316,7 @@
    #endif
   #endif
 
-  //#define MMU2_DEBUG  // Write debug info to serial output
+  #define MMU2_DEBUG  // Write debug info to serial output
 
 #endif // PRUSA_MMU2
 
