@@ -142,6 +142,7 @@ class FilamentSensorBase {
       #define _INIT_RUNOUT(N) INIT_RUNOUT_PIN(FIL_RUNOUT##N##_PIN);
       REPEAT_S(1, INCREMENT(NUM_RUNOUT_SENSORS), _INIT_RUNOUT)
       #undef _INIT_RUNOUT
+      #undef INIT_RUNOUT_PIN
     }
 
     // Return a bitmask of runout pin states
@@ -153,14 +154,8 @@ class FilamentSensorBase {
 
     // Return a bitmask of runout flag states (1 bits always indicates runout)
     static inline uint8_t poll_runout_states() {
-      return (poll_runout_pins()
-        #if DISABLED(FIL_RUNOUT_INVERTING)
-          ^ uint8_t(_BV(NUM_RUNOUT_SENSORS) - 1)
-        #endif
-      );
+      return poll_runout_pins() ^ uint8_t(TERN(FIL_RUNOUT_INVERTING, 0, _BV(NUM_RUNOUT_SENSORS) - 1));
     }
-
-  #undef INIT_RUNOUT_PIN
 };
 
 #if ENABLED(FILAMENT_MOTION_SENSOR)
