@@ -532,9 +532,6 @@ class Planner {
         unapply_leveling(raw);
         leveling_active = false;
       }
-    #else
-      FORCE_INLINE static void apply_leveling(xyz_pos_t&) {}
-      FORCE_INLINE static void unapply_leveling(xyz_pos_t&) {}
     #endif
 
     #if ENABLED(FWRETRACT)
@@ -545,15 +542,23 @@ class Planner {
     #endif
 
     #if HAS_POSITION_MODIFIERS
-      FORCE_INLINE static void apply_modifiers(xyze_pos_t &pos, bool leveling=ENABLED(PLANNER_LEVELING)) {
+      FORCE_INLINE static void apply_modifiers(xyze_pos_t &pos
+        #if HAS_LEVELING
+          , bool leveling = ENABLED(PLANNER_LEVELING)
+        #endif
+      ) {
         TERN_(SKEW_CORRECTION, skew(pos));
-        if (leveling) apply_leveling(pos);
+        TERN_(HAS_LEVELING, if (leveling) apply_leveling(pos));
         TERN_(FWRETRACT, apply_retract(pos));
       }
 
-      FORCE_INLINE static void unapply_modifiers(xyze_pos_t &pos, bool leveling=ENABLED(PLANNER_LEVELING)) {
+      FORCE_INLINE static void unapply_modifiers(xyze_pos_t &pos
+        #if HAS_LEVELING
+          , bool leveling = ENABLED(PLANNER_LEVELING)
+        #endif
+      ) {
         TERN_(FWRETRACT, unapply_retract(pos));
-        if (leveling) unapply_leveling(pos);
+        TERN_(HAS_LEVELING, if (leveling) unapply_leveling(pos));
         TERN_(SKEW_CORRECTION, unskew(pos));
       }
     #endif // HAS_POSITION_MODIFIERS

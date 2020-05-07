@@ -221,7 +221,11 @@ void report_real_position() {
   npos.e = planner.get_axis_position_mm(E_AXIS);
 
   #if HAS_POSITION_MODIFIERS
-    planner.unapply_modifiers(npos, true);
+    planner.unapply_modifiers(npos
+      #if HAS_LEVELING
+        , true
+      #endif
+    );
   #endif
 
   report_logical_position(npos);
@@ -300,7 +304,11 @@ void set_current_from_steppers_for_axis(const AxisEnum axis) {
   pos.e = planner.get_axis_position_mm(E_AXIS);
 
   #if HAS_POSITION_MODIFIERS
-    planner.unapply_modifiers(pos, true);
+    planner.unapply_modifiers(pos
+      #if HAS_LEVELING
+        , true
+      #endif
+    );
   #endif
 
   if (axis == ALL_AXES)

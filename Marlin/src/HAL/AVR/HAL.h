@@ -50,11 +50,7 @@
 // Defines
 // ------------------------
 
-// AVR PROGMEM extension for sprintf_P
-#define S_FMT "%S"
-
-// AVR PROGMEM extension for string define
-#define PGMSTR(NAM,STR) const char NAM[] PROGMEM = STR
+//#define analogInputToDigitalPin(IO) IO
 
 #ifndef CRITICAL_SECTION_START
   #define CRITICAL_SECTION_START()  unsigned char _sreg = SREG; cli()
@@ -63,6 +59,9 @@
 #define ISRS_ENABLED() TEST(SREG, SREG_I)
 #define ENABLE_ISRS()  sei()
 #define DISABLE_ISRS() cli()
+
+// On AVR this is in math.h?
+//#define square(x) ((x)*(x))
 
 // ------------------------
 // Types

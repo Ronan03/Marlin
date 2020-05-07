@@ -692,19 +692,19 @@ void MarlinUI::draw_status_screen() {
         // Two-component mix / gradient instead of XY
 
         char mixer_messages[12];
-        PGM_P mix_label;
+        const char *mix_label;
         #if ENABLED(GRADIENT_MIX)
           if (mixer.gradient.enabled) {
             mixer.update_mix_from_gradient();
-            mix_label = PSTR("Gr");
+            mix_label = "Gr";
           }
           else
         #endif
           {
             mixer.update_mix_from_vtool();
-            mix_label = PSTR("Mx");
+            mix_label = "Mx";
           }
-        sprintf_P(mixer_messages, PSTR(S_FMT " %d;%d%% "), mix_label, int(mixer.mix[0]), int(mixer.mix[1]));
+        sprintf_P(mixer_messages, PSTR("%s %d;%d%% "), mix_label, int(mixer.mix[0]), int(mixer.mix[1]));
         lcd_put_u8str(X_LABEL_POS, XYZ_BASELINE, mixer_messages);
 
       #else

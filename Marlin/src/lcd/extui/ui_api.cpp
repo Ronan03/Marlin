@@ -918,7 +918,7 @@ namespace ExtUI {
   bool isMachineHomed() { return all_axes_homed(); }
 
   PGM_P getFirmwareName_str() {
-    static PGMSTR(firmware_name, "Marlin " SHORT_BUILD_VERSION);
+    static const char firmware_name[] PROGMEM = "Marlin " SHORT_BUILD_VERSION;
     return firmware_name;
   }
 
