@@ -48,7 +48,7 @@
   float lcd_runout_distance_mm;
 #endif
 
-#if ENABLED(EEPROM_SETTINGS) && DISABLED(SLIM_LCD_MENUS)
+#if ENABLED(SD_FIRMWARE_UPDATE)
   #include "../../module/configuration_store.h"
 #endif
 
@@ -96,10 +96,6 @@ void menu_cancelobject();
     END_MENU();
   }
 
-#endif
-
-#if ENABLED(SD_FIRMWARE_UPDATE)
-  #include "../../module/configuration_store.h"
 #endif
 
 #if DISABLED(NO_VOLUMETRICS) || ENABLED(ADVANCED_PAUSE_FEATURE)
@@ -587,13 +583,8 @@ void menu_advanced_settings() {
   #if ENABLED(EEPROM_SETTINGS) && DISABLED(SLIM_LCD_MENUS)
     CONFIRM_ITEM(MSG_INIT_EEPROM,
       MSG_BUTTON_INIT, MSG_BUTTON_CANCEL,
-      []{
-        const bool inited = settings.init_eeprom();
-        ui.completion_feedback(inited);
-        UNUSED(inited);
-      },
-      ui.goto_previous_screen,
-      GET_TEXT(MSG_INIT_EEPROM), (PGM_P)nullptr, PSTR("?")
+      ui.init_eeprom, ui.goto_previous_screen,
+      GET_TEXT(MSG_INIT_EEPROM), (const char *)nullptr, PSTR("?")
     );
   #endif
 

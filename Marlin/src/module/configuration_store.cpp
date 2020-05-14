@@ -37,7 +37,7 @@
  */
 
 // Change EEPROM version if the structure changes
-#define EEPROM_VERSION "V77"
+#define EEPROM_VERSION "V79"
 #define EEPROM_OFFSET 100
 
 // Check the integrity of data offsets.
@@ -1363,9 +1363,7 @@ void MarlinSettings::postprocess() {
       }
       DEBUG_ECHO_START();
       DEBUG_ECHOLNPAIR("EEPROM version mismatch (EEPROM=", stored_ver, " Marlin=" EEPROM_VERSION ")");
-      #if HAS_LCD_MENU && DISABLED(EEPROM_AUTO_INIT)
-        LCD_MESSAGEPGM(MSG_ERR_EEPROM_VERSION);
-      #endif
+      TERN(EEPROM_AUTO_INIT,,ui.eeprom_alert_version());
       eeprom_error = true;
     }
     else {
@@ -2163,17 +2161,13 @@ void MarlinSettings::postprocess() {
       if (eeprom_error) {
         DEBUG_ECHO_START();
         DEBUG_ECHOLNPAIR("Index: ", int(eeprom_index - (EEPROM_OFFSET)), " Size: ", datasize());
-        #if HAS_LCD_MENU && DISABLED(EEPROM_AUTO_INIT)
-          LCD_MESSAGEPGM(MSG_ERR_EEPROM_INDEX);
-        #endif
+        TERN(EEPROM_AUTO_INIT,,ui.eeprom_alert_index());
       }
       else if (working_crc != stored_crc) {
         eeprom_error = true;
         DEBUG_ERROR_START();
         DEBUG_ECHOLNPAIR("EEPROM CRC mismatch - (stored) ", stored_crc, " != ", working_crc, " (calculated)!");
-        #if HAS_LCD_MENU && DISABLED(EEPROM_AUTO_INIT)
-          LCD_MESSAGEPGM(MSG_ERR_EEPROM_CRC);
-        #endif
+        TERN(EEPROM_AUTO_INIT,,ui.eeprom_alert_crc());
       }
       else if (!validating) {
         DEBUG_ECHO_START();
