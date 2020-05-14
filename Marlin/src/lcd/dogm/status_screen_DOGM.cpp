@@ -601,7 +601,11 @@ void MarlinUI::draw_status_screen() {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
    -    if (PAGE_CONTAINS(49, 52))
+=======
+    if (PAGE_CONTAINS(49, 52))
+>>>>>>> parent of ffb13285a... Merge branch 'bugfix-2.0.x' into MMU2-Titan-Ronan
 =======
     if (PAGE_CONTAINS(49, 52))
 >>>>>>> parent of ffb13285a... Merge branch 'bugfix-2.0.x' into MMU2-Titan-Ronan
@@ -628,7 +632,11 @@ void MarlinUI::draw_status_screen() {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     -    if (PAGE_CONTAINS(50, 51))     // 50-51 (or just 50)
+=======
+    if (PAGE_CONTAINS(50, 51))     // 50-51 (or just 50)
+>>>>>>> parent of ffb13285a... Merge branch 'bugfix-2.0.x' into MMU2-Titan-Ronan
 =======
     if (PAGE_CONTAINS(50, 51))     // 50-51 (or just 50)
 >>>>>>> parent of ffb13285a... Merge branch 'bugfix-2.0.x' into MMU2-Titan-Ronan
