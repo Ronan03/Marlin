@@ -565,14 +565,14 @@ float Probe::run_z_probe(const bool sanity_check/*=true*/) {
     }
   #endif
 
-  #if EXTRA_PROBING > 0
+  #ifdef EXTRA_PROBING
     float probes[TOTAL_PROBING];
   #endif
 
   #if TOTAL_PROBING > 2
     float probes_z_sum = 0;
     for (
-      #if EXTRA_PROBING > 0
+      #if EXTRA_PROBING
         uint8_t p = 0; p < TOTAL_PROBING; p++
       #else
         uint8_t p = TOTAL_PROBING; p--;
@@ -588,7 +588,7 @@ float Probe::run_z_probe(const bool sanity_check/*=true*/) {
 
       const float z = current_position.z;
 
-      #if EXTRA_PROBING > 0
+      #if EXTRA_PROBING
         // Insert Z measurement into probes[]. Keep it sorted ascending.
         LOOP_LE_N(i, p) {                            // Iterate the saved Zs to insert the new Z
           if (i == p || probes[i] > z) {                              // Last index or new Z is smaller than this Z
@@ -605,17 +605,14 @@ float Probe::run_z_probe(const bool sanity_check/*=true*/) {
 
       #if TOTAL_PROBING > 2
         // Small Z raise after all but the last probe
-        if (p
-          #if EXTRA_PROBING > 0
-            < TOTAL_PROBING - 1
-          #endif
-        ) do_blocking_move_to_z(z + Z_CLEARANCE_MULTI_PROBE, MMM_TO_MMS(Z_PROBE_SPEED_FAST));
+        if (TERN(EXTRA_PROBING, p < TOTAL_PROBING - 1, p))
+          do_blocking_move_to_z(z + Z_CLEARANCE_MULTI_PROBE, MMM_TO_MMS(Z_PROBE_SPEED_FAST));
       #endif
     }
 
   #if TOTAL_PROBING > 2
 
-    #if EXTRA_PROBING > 0
+    #if EXTRA_PROBING
       // Take the center value (or average the two middle values) as the median
       static constexpr int PHALF = (TOTAL_PROBING - 1) / 2;
       const float middle = probes[PHALF],

@@ -334,10 +334,6 @@ class Stepper {
       static uint32_t nextBabystepISR;
     #endif
 
-    #if ENABLED(DIRECT_STEPPING)
-      static page_step_state_t page_step_state;
-    #endif
-
     static int32_t ticks_nominal;
     #if DISABLED(S_CURVE_ACCELERATION)
       static uint32_t acc_step_rate; // needed for deceleration start point
@@ -430,17 +426,6 @@ class Stepper {
     static void report_a_position(const xyz_long_t &pos);
     static void report_positions();
 
-    // Discard current block and free any resources
-    FORCE_INLINE static void discard_current_block() {
-      #if ENABLED(DIRECT_STEPPING)
-        if (IS_PAGE(current_block))
-          page_manager.free_page(current_block->page_idx);
-      #endif
-      current_block = nullptr;
-      axis_did_move = 0;
-      planner.release_current_block();
-    }
-
     // Quickly stop all steppers
     FORCE_INLINE static void quick_stop() { abort_current_block = true; }
 
@@ -452,7 +437,11 @@ class Stepper {
 
     // The extruder associated to the last movement
     FORCE_INLINE static uint8_t movement_extruder() {
-      return (EXTRUDERS > 1 && DISABLED(MIXING_EXTRUDER)) ? last_moved_extruder : 0;
+      return (0
+        #if EXTRUDERS > 1 && DISABLED(MIXING_EXTRUDER)
+          + last_moved_extruder
+        #endif
+      );
     }
 
     // Handle a triggered endstop

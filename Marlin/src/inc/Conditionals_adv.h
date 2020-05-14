@@ -259,10 +259,11 @@
 #endif
 
 /**
- * Driver Timings (in nanoseconds)
+ * Driver Timings
  * NOTE: Driver timing order is longest-to-shortest duration.
  *       Preserve this ordering when adding new drivers.
  */
+
 #ifndef MINIMUM_STEPPER_POST_DIR_DELAY
   #if HAS_DRIVER(TB6560)
     #define MINIMUM_STEPPER_POST_DIR_DELAY 15000
@@ -277,7 +278,7 @@
   #elif HAS_DRIVER(A4988)
     #define MINIMUM_STEPPER_POST_DIR_DELAY 200
   #elif HAS_TRINAMIC_CONFIG || HAS_TRINAMIC_STANDALONE
-    #define MINIMUM_STEPPER_POST_DIR_DELAY 60
+    #define MINIMUM_STEPPER_POST_DIR_DELAY 20
   #else
     #define MINIMUM_STEPPER_POST_DIR_DELAY 0   // Expect at least 10µS since one Stepper ISR must transpire
   #endif
@@ -320,18 +321,6 @@
     #define MAXIMUM_STEPPER_RATE 5000000
   #else
     #define MAXIMUM_STEPPER_RATE 250000
-  #endif
-#endif
-
-#if ENABLED(DIRECT_STEPPING)
-  #ifndef STEPPER_PAGES
-    #define STEPPER_PAGES 16
-  #endif
-  #ifndef STEPPER_PAGE_FORMAT
-    #define STEPPER_PAGE_FORMAT SP_4x2_256
-  #endif
-  #ifndef PAGE_MANAGER
-    #define PAGE_MANAGER SerialPageManager
   #endif
 #endif
 

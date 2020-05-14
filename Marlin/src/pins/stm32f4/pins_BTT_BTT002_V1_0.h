@@ -33,12 +33,6 @@
 //#define SRAM_EEPROM_EMULATION                   // Use BackSRAM-based EEPROM emulation
 #define FLASH_EEPROM_EMULATION                    // Use Flash-based EEPROM emulation
 
-#if ENABLED(FLASH_EEPROM_EMULATION)
-  // Decrease delays and flash wear by spreading writes across the
-  // 128 kB sector allocated for EEPROM emulation.
-  #define FLASH_EEPROM_LEVELING
-#endif
-
 // Ignore temp readings during development.
 //#define BOGUS_TEMPERATURE_GRACE_PERIOD 2000
 

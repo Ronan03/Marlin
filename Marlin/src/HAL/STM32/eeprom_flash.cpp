@@ -29,13 +29,10 @@
 
 #include "../shared/eeprom_api.h"
 
-#if HAS_SERVOS
-  #include "Servo.h"
-  #define PAUSE_SERVO_OUTPUT() libServo::pause_all_servos()
-  #define RESUME_SERVO_OUTPUT() libServo::resume_all_servos()
-#else  
-  #define PAUSE_SERVO_OUTPUT()
-  #define RESUME_SERVO_OUTPUT()
+
+// Only STM32F4 can support wear leveling at this time
+#ifndef STM32F4xx
+  #undef FLASH_EEPROM_LEVELING
 #endif
 
 /**
@@ -143,11 +140,6 @@ bool PersistentStore::access_start() {
 bool PersistentStore::access_finish() {
 
   if (eeprom_data_written) {
-    #ifdef STM32F4xx
-      // MCU may come up with flash error bits which prevent some flash operations.
-      // Clear flags prior to flash operations to prevent errors.
-      __HAL_FLASH_CLEAR_FLAG(FLASH_FLAG_OPERR | FLASH_FLAG_WRPERR | FLASH_FLAG_PGAERR | FLASH_FLAG_PGPERR | FLASH_FLAG_PGSERR);
-    #endif    
 
     #if ENABLED(FLASH_EEPROM_LEVELING)
 
@@ -168,11 +160,7 @@ bool PersistentStore::access_finish() {
         current_slot = EEPROM_SLOTS - 1;
         UNLOCK_FLASH();
 
-        PAUSE_SERVO_OUTPUT();
-        DISABLE_ISRS();
         status = HAL_FLASHEx_Erase(&EraseInitStruct, &SectorError);
-        ENABLE_ISRS();
-        RESUME_SERVO_OUTPUT();
         if (status != HAL_OK) {
           DEBUG_ECHOLNPAIR("HAL_FLASHEx_Erase=", status);
           DEBUG_ECHOLNPAIR("GetError=", HAL_FLASH_GetError());
@@ -217,18 +205,7 @@ bool PersistentStore::access_finish() {
       return success;
 
     #else
-      // The following was written for the STM32F4 but may work with other MCUs as well.
-      // Most STM32F4 flash does not allow reading from flash during erase operations.
-      // This takes about a second on a STM32F407 with a 128kB sector used as EEPROM.
-      // Interrupts during this time can have unpredictable results, such as killing Servo
-      // output. Servo output still glitches with interrupts disabled, but recovers after the
-      // erase.
-      PAUSE_SERVO_OUTPUT();
-      DISABLE_ISRS();
       eeprom_buffer_flush();
-      ENABLE_ISRS();
-      RESUME_SERVO_OUTPUT();
-
       eeprom_data_written = false;
     #endif
   }

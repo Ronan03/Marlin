@@ -269,7 +269,7 @@ void menu_mixer() {
       ui.return_to_status();
     },
     ui.goto_previous_screen,
-    GET_TEXT(MSG_RESET_VTOOLS), (const char *)nullptr, PSTR("?")
+    GET_TEXT(MSG_RESET_VTOOLS), (PGM_P)nullptr, PSTR("?")
   );
 
   #if ENABLED(GRADIENT_MIX)

@@ -29,7 +29,6 @@
 
 #define BOARD_INFO_NAME   "FYSETC Cheetah"
 #define BOARD_WEBSITE_URL "fysetc.com"
-// https://github.com/FYSETC/Cheetah
 
 // Ignore temp readings during development.
 //#define BOGUS_TEMPERATURE_GRACE_PERIOD 2000
@@ -102,41 +101,39 @@
 // Misc. Functions
 //
 #define SDSS                                PA4
-#define SD_DETECT_PIN                       PC3
 
-#ifndef RGB_LED_R_PIN
-  #define RGB_LED_R_PIN                     PB0
-#endif
-#ifndef RGB_LED_G_PIN
-  #define RGB_LED_G_PIN                     PB7
-#endif
-#ifndef RGB_LED_B_PIN
-  #define RGB_LED_B_PIN                     PB6
-#endif
+//
+// LCD Pins
+//
+/**
+ *                 _____
+ *             5V | 1 2 | GND
+ *    (MOSI) PB15 | 3 4 | PB12 (LCD_EN)
+ *     (SCK) PB13 | 5 6   PC11 (BTN_EN1)
+ *  (LCD_RS) PB14 | 7 8 | PC10 (BTN_EN2)
+ * (BTN_ENC) PC12 | 9 10| PC9  (BEEPER)
+ *                 -----
+ *                 EXP1
+ */
 
-/*
-* EXP1 pinout for the LCD according to Fysetcs schematic for the Cheetah board
-*                 _____
-*  (Beeper) PC9  | 1 2 | PC12 (BTN_ENC)
-* (BTN_EN2) PC11 | 3 4 | PB14 (LCD_RS / MISO)
-* (BTN_EN1) PC10   5 6 | PB13 (SCK)
-*  (LCD_EN) PB12 | 7 8 | PB15 (MOSI)
-*            GND | 9 10| 5V
-*                 -----
-*                 EXP1
-* Note: The pin-numbers match the connector correctly and are not in reverse order like on the Ender-3 board.
-* Note: Functionally the pins are assigned in the same order as on the Ender-3 board.
-* Note: Pin 4 on the Cheetah board is assigned to an I/O, it is assigned to RESET on the Ender-3 board.
-*/
+#define EXPA1_03_PIN                        PB15
+#define EXPA1_04_PIN                        PB12
+#define EXPA1_05_PIN                        PB13
+#define EXPA1_06_PIN                        PC11
+#define EXPA1_07_PIN                        PB14
+#define EXPA1_08_PIN                        PC10
+#define EXPA1_09_PIN                        PC12
+#define EXPA1_10_PIN                        PC9
 
 #if HAS_SPI_LCD
-  #define BEEPER_PIN                        PC9
+
+  #define BEEPER_PIN                EXPA1_10_PIN
 
   #if HAS_GRAPHICAL_LCD
-    #define DOGLCD_A0                       PB14
-    #define DOGLCD_CS                       PB12
-    #define DOGLCD_SCK                      PB13
-    #define DOGLCD_MOSI                     PB15
+    #define DOGLCD_A0               EXPA1_07_PIN
+    #define DOGLCD_CS               EXPA1_04_PIN
+    #define DOGLCD_SCK              EXPA1_05_PIN
+    #define DOGLCD_MOSI             EXPA1_03_PIN
     //#define LCD_SCREEN_ROT_90
     //#define LCD_SCREEN_ROT_180
     //#define LCD_SCREEN_ROT_270
@@ -146,17 +143,31 @@
     #endif
   #endif
 
-  #define LCD_PINS_RS                       PB12  // CS -- SOFT SPI for ENDER3 LCD
-  #define LCD_PINS_D4                       PB13  // SCLK
-  #define LCD_PINS_ENABLE                   PB15  // DATA MOSI
+  #define LCD_PINS_RS               EXPA1_04_PIN  // CS -- SOFT SPI for ENDER3 LCD
+  #define LCD_PINS_D4               EXPA1_05_PIN  // SCLK
+  #define LCD_PINS_ENABLE           EXPA1_03_PIN  // DATA MOSI
+
+  // not connected to a pin
+  #define SD_DETECT_PIN                     PC3
+
+  #ifndef RGB_LED_R_PIN
+    #define RGB_LED_R_PIN                   PB0
+  #endif
+  #ifndef RGB_LED_G_PIN
+    #define RGB_LED_G_PIN                   PB7
+  #endif
+  #ifndef RGB_LED_B_PIN
+    #define RGB_LED_B_PIN                   PB6
+  #endif
 
   //#define LCD_CONTRAST_INIT 190
 
   #if ENABLED(NEWPANEL)
-    #define BTN_EN1                         PC10
-    #define BTN_EN2                         PC11
-    #define BTN_ENC                         PC12
+    #define BTN_EN1                 EXPA1_06_PIN
+    #define BTN_EN2                 EXPA1_08_PIN
+    #define BTN_ENC                 EXPA1_09_PIN
   #endif
+
 #endif
 
 #if ENABLED(TOUCH_UI_FTDI_EVE)
@@ -164,6 +175,8 @@
 
   #define BTN_EN2                   EXPA1_08_PIN
 
+  #define CLCD_SPI_BUS 2
+  //#define CLCD_USE_SOFT_SPI
   #if ENABLED(CLCD_USE_SOFT_SPI)
     #define LCD_PINS_RS             EXPA1_04_PIN
     #define LCD_PINS_D4             EXPA1_07_PIN

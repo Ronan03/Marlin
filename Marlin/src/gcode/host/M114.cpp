@@ -38,12 +38,11 @@
     char str[12];
     LOOP_L_N(a, n) {
       SERIAL_CHAR(' ', axis_codes[a], ':');
-      if (pos[a] >= 0) SERIAL_CHAR(' ');
       SERIAL_ECHO(dtostrf(pos[a], 1, precision, str));
     }
     SERIAL_EOL();
   }
-  inline void report_xyz(const xyze_pos_t &pos) { report_xyze(pos, XYZ); }
+  inline void report_xyz(const xyze_pos_t &pos) { report_xyze(pos, 3); }
 
   void report_xyz(const xyz_pos_t &pos, const uint8_t precision=3) {
     char str[12];
