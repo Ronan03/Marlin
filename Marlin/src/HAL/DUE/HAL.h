@@ -34,7 +34,6 @@
 #include "../shared/HAL_SPI.h"
 #include "fastio.h"
 #include "watchdog.h"
-#include "timers.h"
 
 #include <stdint.h>
 

@@ -25,7 +25,6 @@
 #include "hardware/Timer.h"
 
 #include "../../inc/MarlinConfig.h"
-#include "timers.h"
 
 /**
  * Use POSIX signals to attempt to emulate Interrupts

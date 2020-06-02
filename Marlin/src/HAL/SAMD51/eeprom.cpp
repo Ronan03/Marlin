@@ -18,18 +18,26 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-
 #ifdef __SAMD51__
 
 #include "../../inc/MarlinConfig.h"
 
-#if ENABLED(EEPROM_SETTINGS) && NONE(QSPI_EEPROM, FLASH_EEPROM_EMULATION)
+#if USE_WIRED_EEPROM
 
+/**
+ * PersistentStore for Arduino-style EEPROM interface
+ * with simple implementations supplied by Marlin.
+ */
+
+#include "../shared/eeprom_if.h"
 #include "../shared/eeprom_api.h"
 
-size_t PersistentStore::capacity() { return E2END + 1; }
+#ifndef MARLIN_EEPROM_SIZE
+  #error "MARLIN_EEPROM_SIZE is required for I2C / SPI EEPROM."
+#endif
+size_t PersistentStore::capacity()    { return MARLIN_EEPROM_SIZE; }
 
-bool PersistentStore::access_start() { return true; }
+bool PersistentStore::access_start()  { eeprom_init(); return true; }
 bool PersistentStore::access_finish() { return true; }
 
 bool PersistentStore::write_data(int &pos, const uint8_t *value, size_t size, uint16_t *crc) {
@@ -62,5 +70,5 @@ bool PersistentStore::read_data(int &pos, uint8_t* value, size_t size, uint16_t 
   return false;
 }
 
-#endif // EEPROM_SETTINGS && !(QSPI_EEPROM || FLASH_EEPROM_EMULATION)
+#endif // USE_WIRED_EEPROM
 #endif // __SAMD51__

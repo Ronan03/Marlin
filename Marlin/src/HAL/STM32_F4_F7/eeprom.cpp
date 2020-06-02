@@ -20,16 +20,26 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-
 #if defined(STM32GENERIC) && (defined(STM32F4) || defined(STM32F7))
 
-#include "../../inc/MarlinConfigPre.h"
+#include "../../inc/MarlinConfig.h"
 
-#if ENABLED(EEPROM_SETTINGS)
+#if USE_WIRED_EEPROM
 
+/**
+ * PersistentStore for Arduino-style EEPROM interface
+ * with simple implementations supplied by Marlin.
+ */
+
+#include "../shared/eeprom_if.h"
 #include "../shared/eeprom_api.h"
 
-bool PersistentStore::access_start() { return true; }
+#ifndef MARLIN_EEPROM_SIZE
+  #error "MARLIN_EEPROM_SIZE is required for I2C / SPI EEPROM."
+#endif
+size_t PersistentStore::capacity() { return MARLIN_EEPROM_SIZE; }
+
+bool PersistentStore::access_start()  { eeprom_init(); return true; }
 bool PersistentStore::access_finish() { return true; }
 
 bool PersistentStore::write_data(int &pos, const uint8_t *value, size_t size, uint16_t *crc) {
@@ -63,7 +73,5 @@ bool PersistentStore::read_data(int &pos, uint8_t* value, size_t size, uint16_t 
   return false;
 }
 
-size_t PersistentStore::capacity() { return E2END + 1; }
-
-#endif // EEPROM_SETTINGS
+#endif // USE_WIRED_EEPROM
 #endif // STM32GENERIC && (STM32F4 || STM32F7)
