@@ -206,7 +206,7 @@
 #endif
 
 #define I2C_EEPROM
-#define MARLIN_EEPROM_SIZE 0x2000                 // 8KB
+#define E2END 0x1FFF                              // 8KB
 
 //
 // M3/M4/M5 - Spindle/Laser Control

@@ -34,6 +34,8 @@
 #include "watchdog.h"
 #include "i2s.h"
 
+#include "timers.h"
+
 #if ENABLED(WIFISUPPORT)
   #include "WebSocketSerial.h"
 #endif

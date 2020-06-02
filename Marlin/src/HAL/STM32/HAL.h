@@ -30,7 +30,6 @@
 #include "../shared/HAL_SPI.h"
 #include "fastio.h"
 #include "watchdog.h"
-#include "MarlinSerial.h"
 
 #include "../../inc/MarlinConfigPre.h"
 
@@ -49,17 +48,17 @@
 #elif SERIAL_PORT == -1
   #define MYSERIAL0 SerialUSB
 #elif SERIAL_PORT == 1
-  #define MYSERIAL0 MSerial1
+  #define MYSERIAL0 Serial1
 #elif SERIAL_PORT == 2
-  #define MYSERIAL0 MSerial2
+  #define MYSERIAL0 Serial2
 #elif SERIAL_PORT == 3
-  #define MYSERIAL0 MSerial3
+  #define MYSERIAL0 Serial3
 #elif SERIAL_PORT == 4
-  #define MYSERIAL0 MSerial4
+  #define MYSERIAL0 Serial4
 #elif SERIAL_PORT == 5
-  #define MYSERIAL0 MSerial5
+  #define MYSERIAL0 Serial5
 #elif SERIAL_PORT == 6
-  #define MYSERIAL0 MSerial6
+  #define MYSERIAL0 Serial6
 #else
   #error "SERIAL_PORT must be from -1 to 6. Please update your configuration."
 #endif
@@ -73,17 +72,17 @@
   #elif SERIAL_PORT_2 == -1
     #define MYSERIAL1 SerialUSB
   #elif SERIAL_PORT_2 == 1
-    #define MYSERIAL1 MSerial1
+    #define MYSERIAL1 Serial1
   #elif SERIAL_PORT_2 == 2
-    #define MYSERIAL1 MSerial2
+    #define MYSERIAL1 Serial2
   #elif SERIAL_PORT_2 == 3
-    #define MYSERIAL1 MSerial3
+    #define MYSERIAL1 Serial3
   #elif SERIAL_PORT_2 == 4
-    #define MYSERIAL1 MSerial4
+    #define MYSERIAL1 Serial4
   #elif SERIAL_PORT_2 == 5
-    #define MYSERIAL1 MSerial5
+    #define MYSERIAL1 Serial5
   #elif SERIAL_PORT_2 == 6
-    #define MYSERIAL1 MSerial6
+    #define MYSERIAL1 Serial6
   #else
     #error "SERIAL_PORT_2 must be from -1 to 6. Please update your configuration."
   #endif
@@ -101,17 +100,17 @@
   #elif DGUS_SERIAL_PORT == -1
     #define DGUS_SERIAL SerialUSB
   #elif DGUS_SERIAL_PORT == 1
-    #define DGUS_SERIAL MSerial1
+    #define DGUS_SERIAL Serial1
   #elif DGUS_SERIAL_PORT == 2
-    #define DGUS_SERIAL MSerial2
+    #define DGUS_SERIAL Serial2
   #elif DGUS_SERIAL_PORT == 3
-    #define DGUS_SERIAL MSerial3
+    #define DGUS_SERIAL Serial3
   #elif DGUS_SERIAL_PORT == 4
-    #define DGUS_SERIAL MSerial4
+    #define DGUS_SERIAL Serial4
   #elif DGUS_SERIAL_PORT == 5
-    #define DGUS_SERIAL MSerial5
+    #define DGUS_SERIAL Serial5
   #elif DGUS_SERIAL_PORT == 6
-    #define DGUS_SERIAL MSerial6
+    #define DGUS_SERIAL Serial6
   #else
     #error "DGUS_SERIAL_PORT must be from -1 to 6. Please update your configuration."
   #endif
@@ -119,6 +118,7 @@
   #define DGUS_SERIAL_GET_TX_BUFFER_FREE DGUS_SERIAL.availableForWrite
 #endif
 
+#include "timers.h"
 
 /**
  * TODO: review this to return 1 for pins that are not analog input

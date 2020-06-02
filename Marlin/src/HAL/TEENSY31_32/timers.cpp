@@ -26,7 +26,8 @@
 
 #ifdef __MK20DX256__
 
-#include "../../inc/MarlinConfig.h"
+#include "HAL.h"
+#include "timers.h"
 
 /** \brief Instruction Synchronization Barrier
   Instruction Synchronization Barrier flushes the pipeline in the processor,

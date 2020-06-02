@@ -61,20 +61,14 @@ typedef uint16_t hal_timer_t;
  *   - Otherwise it uses Timer 8 on boards with STM32_HIGH_DENSITY
  *     or Timer 4 on other boards.
  */
-#ifndef STEP_TIMER_NUM
-  #if defined(MCU_STM32F103CB) || defined(MCU_STM32F103C8)
-    #define STEP_TIMER_NUM      4  // For C8/CB boards, use timer 4
-  #else
-    #define STEP_TIMER_NUM      5  // for other boards, five is fine.
-  #endif
+#if defined(MCU_STM32F103CB) || defined(MCU_STM32F103C8)
+  #define STEP_TIMER_NUM 4 // For C8/CB boards, use timer 4
+#else
+  #define STEP_TIMER_NUM 5 // for other boards, five is fine.
 #endif
-#ifndef PULSE_TIMER_NUM
-  #define PULSE_TIMER_NUM       STEP_TIMER_NUM
-#endif
-#ifndef TEMP_TIMER_NUM
-  #define TEMP_TIMER_NUM        2  // Timer Index for Temperature
-  //#define TEMP_TIMER_NUM      4  // 2->4, Timer 2 for Stepper Current PWM
-#endif
+#define TEMP_TIMER_NUM 2    // index of timer to use for temperature
+//#define TEMP_TIMER_NUM 4  // 2->4, Timer 2 for Stepper Current PWM
+#define PULSE_TIMER_NUM STEP_TIMER_NUM
 
 #if MB(BTT_SKR_MINI_E3_V1_0, BTT_SKR_E3_DIP, BTT_SKR_MINI_E3_V1_2, MKS_ROBIN_LITE)
   // SKR Mini E3 boards use PA8 as FAN_PIN, so TIMER 1 is used for Fan PWM.
@@ -117,12 +111,8 @@ timer_dev* get_timer_dev(int number);
 
 // TODO change this
 
-#ifndef HAL_TEMP_TIMER_ISR
-  #define HAL_TEMP_TIMER_ISR() extern "C" void tempTC_Handler()
-#endif
-#ifndef HAL_STEP_TIMER_ISR
-  #define HAL_STEP_TIMER_ISR() extern "C" void stepTC_Handler()
-#endif
+#define HAL_TEMP_TIMER_ISR() extern "C" void tempTC_Handler()
+#define HAL_STEP_TIMER_ISR() extern "C" void stepTC_Handler()
 
 extern "C" void tempTC_Handler();
 extern "C" void stepTC_Handler();

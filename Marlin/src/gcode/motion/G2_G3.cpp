@@ -103,22 +103,17 @@ void plan_arc(
 
   const feedRate_t scaled_fr_mm_s = MMS_SCALED(feedrate_mm_s);
 
-  // Start with a nominal segment length
-  float seg_length = (
-    #ifdef ARC_SEGMENTS_PER_R
-      constrain(MM_PER_ARC_SEGMENT * radius, MM_PER_ARC_SEGMENT, ARC_SEGMENTS_PER_R)
-    #elif ARC_SEGMENTS_PER_SEC
-      _MAX(scaled_fr_mm_s * RECIPROCAL(ARC_SEGMENTS_PER_SEC), MM_PER_ARC_SEGMENT)
-    #else
-      MM_PER_ARC_SEGMENT
-    #endif
-  );
-  // Divide total travel by nominal segment length
+  #ifdef ARC_SEGMENTS_PER_R
+    float seg_length = MM_PER_ARC_SEGMENT * radius;
+    LIMIT(seg_length, MM_PER_ARC_SEGMENT, ARC_SEGMENTS_PER_R);
+  #elif ARC_SEGMENTS_PER_SEC
+    float seg_length = scaled_fr_mm_s * RECIPROCAL(ARC_SEGMENTS_PER_SEC);
+    NOLESS(seg_length, MM_PER_ARC_SEGMENT);
+  #else
+    constexpr float seg_length = MM_PER_ARC_SEGMENT;
+  #endif
   uint16_t segments = FLOOR(mm_of_travel / seg_length);
-  if (segments < min_segments) {            // Too few segments?
-    segments = min_segments;                // More segments
-  }
-  seg_length = mm_of_travel / segments;
+  NOLESS(segments, min_segments);
 
   /**
    * Vector rotation by transformation matrix: r is the original vector, r_T is the rotated vector,
@@ -151,9 +146,8 @@ void plan_arc(
   const float theta_per_segment = angular_travel / segments,
               linear_per_segment = linear_travel / segments,
               extruder_per_segment = extruder_travel / segments,
-              sq_theta_per_segment = sq(theta_per_segment),
-              sin_T = theta_per_segment - sq_theta_per_segment*theta_per_segment/6,
-              cos_T = 1 - 0.5f * sq_theta_per_segment; // Small angle approximation
+              sin_T = theta_per_segment,
+              cos_T = 1 - 0.5f * sq(theta_per_segment); // Small angle approximation
 
   // Initialize the linear axis
   raw[l_axis] = current_position[l_axis];
@@ -219,7 +213,7 @@ void plan_arc(
       planner.apply_leveling(raw);
     #endif
 
-    if (!planner.buffer_line(raw, scaled_fr_mm_s, active_extruder, 0
+    if (!planner.buffer_line(raw, scaled_fr_mm_s, active_extruder, seg_length
       #if ENABLED(SCARA_FEEDRATE_SCALING)
         , inv_duration
       #endif

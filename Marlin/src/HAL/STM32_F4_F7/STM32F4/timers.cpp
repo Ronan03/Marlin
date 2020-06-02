@@ -22,7 +22,8 @@
 
 #if defined(STM32GENERIC) && defined(STM32F4)
 
-#include "../../../inc/MarlinConfig.h"
+#include "../HAL.h"
+#include "timers.h"
 
 // ------------------------
 // Local defines

@@ -31,7 +31,8 @@
 #define BOARD_WEBSITE_URL    "github.com/FLYmaker/FLYF407ZG"
 #define DEFAULT_MACHINE_NAME BOARD_INFO_NAME
 
-#define MARLIN_EEPROM_SIZE 0x1000                 // 4KB
+#undef E2END
+#define E2END 0xFFF                               // 4KB
 
 //
 // Servos

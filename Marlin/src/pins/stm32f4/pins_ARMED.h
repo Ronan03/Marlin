@@ -39,7 +39,9 @@
 #define DEFAULT_MACHINE_NAME BOARD_INFO_NAME
 
 #define I2C_EEPROM
-#define MARLIN_EEPROM_SIZE 0x1000                 // 4KB
+
+#undef E2END                                      // Defined in Arduino Core STM32 to be used with EEPROM emulation. This board uses a real EEPROM.
+#define E2END 0xFFF                               // 4KB
 
 //
 // Limit Switches

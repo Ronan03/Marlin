@@ -726,7 +726,7 @@
 
   #error "CAUTION! LCD_FYSETC_TFT81050 requires wiring modifications. See 'pins_RAMPS.h' for details. Comment out this line to continue."
 
-  /** FYSETC TFT TFT81050 display pinout
+  /** FYSECT TFT TFT81050 display pinout
    *
    *               Board                                     Display
    *               _____                                     _____
@@ -759,8 +759,11 @@
 
   #define BEEPER_PIN                          37
 
+  #define BTN_EN1                             31
+  #define LCD_PINS_RS                         33
+
   #define SD_DETECT_PIN                       49
 
-  #define CLCD_MOD_RESET                      31
-  #define CLCD_SPI_CS                         33
+  #define KILL_PIN                            -1
+
 #endif // TOUCH_UI_FTDI_EVE && LCD_FYSETC_TFT81050

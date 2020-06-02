@@ -106,8 +106,6 @@ typedef struct {
 
   uint8_t valid_foot;
 
-  bool valid() { return valid_head && valid_head == valid_foot; }
-
 } job_recovery_info_t;
 
 class PrintJobRecovery {
@@ -166,7 +164,7 @@ class PrintJobRecovery {
     }
   #endif
 
-  static inline bool valid() { return info.valid(); }
+  static inline bool valid() { return info.valid_head && info.valid_head == info.valid_foot; }
 
   #if ENABLED(DEBUG_POWER_LOSS_RECOVERY)
     static void debug(PGM_P const prefix);

@@ -35,8 +35,7 @@ public:
    * commands to Marlin, and lines will be checked for sequentiality.
    * M110 N<int> sets the current line number.
    */
-
-  static long last_N[NUM_SERIAL];
+  static long last_N;
 
   /**
    * GCode Command Queue
@@ -52,20 +51,12 @@ public:
 
   static char command_buffer[BUFSIZE][MAX_CMD_SIZE];
 
-  /**
+  /*
    * The port that the command was received on
    */
   #if NUM_SERIAL > 1
     static int16_t port[BUFSIZE];
   #endif
-
-  static int16_t command_port() {
-    return (0
-      #if NUM_SERIAL > 1
-        + port[index_r]
-      #endif
-    );
-  }
 
   GCodeQueue();
 

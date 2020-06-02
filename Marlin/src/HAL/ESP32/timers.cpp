@@ -28,7 +28,9 @@
 #include <driver/periph_ctrl.h>
 #include <driver/timer.h>
 
-#include "../../inc/MarlinConfig.h"
+#include "HAL.h"
+
+#include "timers.h"
 
 // ------------------------
 // Local defines

@@ -27,7 +27,8 @@
 
 #if defined(__MK64FX512__) || defined(__MK66FX1M0__)
 
-#include "../../inc/MarlinConfig.h"
+#include "HAL.h"
+#include "timers.h"
 
 /** \brief Instruction Synchronization Barrier
   Instruction Synchronization Barrier flushes the pipeline in the processor,
